@@ -1,0 +1,63 @@
+---
+title: "随机模拟方法与应用导论 作业三"
+author: "陈稼霖 45875852"
+date: "2019-10-01"
+output:
+  pdf_document:
+    includes:
+      in_header: header.tex
+    keep_tex: yes
+    latex_engine: pdflatex
+  html_document: default
+  word_document: default
+---
+
+# 3.5 (Relating age and wage in the twins dataset)
+The variables `AGE` and `HRWAGEL` contain the age (in years) and hourly wage (in dollars) of twin 1.
+
+a. Using two applications of the `cut` function, create a categorized version of `AGE` using the breakpoints $30$, $40$, and $50$, and a categorized version of `HRWAGEL` using the same breakpoints as in Section 3.3.
+
+b. Using the categorized versions of AGE and HRWAGEL, construct a contingency table of the two variables using the function `table`.
+
+c. Use the `prop.table` function to find the proportions of twins in each age class that have the different wage groups.
+
+d.  Construct a suitable graph to show how the wage distribution depends on the age of the twin.
+
+e.  Use the conditional proportions in part (c) and the graph in part (d) to explain the relationship between age and wage of the twins.
+
+<br/>
+
+a. 首先读取数据文件`twins.dat.txt`，用`cut`函数根据断点$30$，$40$和$50$分割变量`AGE`并展示结果
+```{r}
+twn = read.table('twins.dat.txt',header = TRUE,sep = ',',na.strings = '.')
+c.age = cut(twn$AGE,breaks = c(0,30,40,50,80))
+c.age
+```
+
+然后用`cut`函数根据3.3节中的断点———`0,7,13,20,150`———分割变量`HRWAGEL`并展示结果
+```{r}
+c.wage = cut(twn$HRWAGEL,breaks = c(0,7,13,20,150))
+c.wage
+```
+
+b. 用`table`函数构建年龄和小时工资的相依表并展示
+```{r}
+T = table(c.age,c.wage)
+T
+```
+
+c. 用`prop.table`函数计算各年龄层次的工资分布情况
+```{r}
+P = prop.table(T,margin = 1)
+P
+```
+
+由此可见，年龄处于$0$至$30$岁的年轻人小时工资分布集中在$(0,7]$美元的区间，随着年龄的增长，工资会先有一定程度的提高，如$30$岁至$40$岁年龄段的工资分布最多的区间为$(7,13]$美元，$40$岁至$50$岁为$(13,20]$美元，但当年龄进一步增长时，工资开始下降，年龄处于$50$至$80$岁的老人工资分布最多的区间为$(7,13]$美元。
+
+d. 用`barplot`函数绘制工资分布随年龄变化的分段条形图
+```{r}
+barplot(t(P),ylim = c(0,1.6),ylab = 'WAGE PROPORTION',xlab = 'AGE'
+        ,legend.text = dimnames(P)$c.wage,args.legend = list(x = 'top'))
+```
+
+e. 解释：由c中的条件比例和d中的分段条形图可见，双胞胎的工资随着年龄的增长先有一定程度的提高，这可能是由于随着学历的提高和工龄的增长，双胞胎的工作能力提高，随着年龄的进步增长，工资后下降，这可能是双胞胎由于年老，工作能力下降。

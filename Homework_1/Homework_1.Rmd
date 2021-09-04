@@ -1,0 +1,64 @@
+---
+title: "随机模拟方法与应用导论 作业一"
+author: "陈稼霖 45875852"
+date: "2019-09-23"
+output:
+  pdf_document:
+    includes:
+      in_header: header.tex
+    keep_tex: yes
+    latex_engine: pdflatex
+  html_document: default
+  word_document: default
+---
+
+# 1.5 (Binomial CDF)
+Let $X$ be the number of “ones” obtained in $12$ rolls of a fair die. Then $X$ has a Binomial($n = 12,p = 1/6$) distribution. Compute a table of cumulative binomial probabilities (the CDF) for $x = 0,1,\dots,12$ by two methods: (1) using **cumsum** and the result of Exercise 1.4, and (2) using the **pbinom** function. What is $P(X > 7)$?
+
+(1) 先计算二项式分布的PMF
+$$
+P(X=k)=\left(\begin{array}{c}n\\k\end{array}\right)p^k\left(1-p\right)^{n-k}=\left(\begin{array}{c}12\\k\end{array}\right)\left(\frac{1}{3}\right)^k\left(1-\frac{1}{3}\right)
+$$
+```{r}
+options(digits = 8)
+n = 12
+p = 1/3
+k = c(0:n)
+P = choose(n,k) * p^k * (1 - p)^(n - k)
+P
+```
+然后利用函数**cumsum**计算其CDF
+```{r}
+F = cumsum(P)
+F_k = cbind(k,F)
+colnames(F_k) = c('k','F(X=k)')
+F_k
+```
+
+(2) 直接用函数**pbinom**函数计算二项式分布的CDF
+```{r}
+F = pbinom(k,n,p)
+F_k = cbind(k,F)
+colnames(F_k) = c('k','F(X=k)')
+F_k
+```
+
+计算$P(x>7)$
+```{r}
+F = 1-pbinom(7,n,p)
+1-pbinom(7,n,p)
+```
+
+# 1.13 (lunatics data)
+Obtain a five-number summary for the numeric variables in the lunatics data set (see Example 1.12). From the summary we can get an idea about the skewness of variables by comparing the median and the mean population. Which of the distributions are skewed, and in which direction?
+
+先生成所需数据集
+```{r}
+x = matrix(rnorm(20),10,2)
+x
+```
+生成数据集的summary
+```{r}
+summary(x)
+```
+从中可见，V1的平均值大于其中位值，因此V1正偏(positive skewed)，V2的平均值大于其中位值，因此V2也正偏。

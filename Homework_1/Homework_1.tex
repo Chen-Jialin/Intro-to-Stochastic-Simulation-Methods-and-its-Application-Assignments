@@ -1,0 +1,297 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={随机模拟方法与应用导论 作业一},
+            pdfauthor={陈稼霖 45875852},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\providecommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{随机模拟方法与应用导论 作业一}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{陈稼霖 45875852}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+      \predate{\centering\large\emph}
+  \postdate{\par}
+    \date{2019-09-23}
+
+\usepackage[UTF8]{ctex}
+
+\begin{document}
+\maketitle
+
+\hypertarget{binomial-cdf}{%
+\section{1.5 (Binomial CDF)}\label{binomial-cdf}}
+
+Let \(X\) be the number of ``ones'' obtained in \(12\) rolls of a fair
+die. Then \(X\) has a Binomial(\(n = 12,p = 1/6\)) distribution. Compute
+a table of cumulative binomial probabilities (the CDF) for
+\(x = 0,1,\dots,12\) by two methods: (1) using \textbf{cumsum} and the
+result of Exercise 1.4, and (2) using the \textbf{pbinom} function. What
+is \(P(X > 7)\)?
+
+\begin{enumerate}
+\def\labelenumi{(\arabic{enumi})}
+\tightlist
+\item
+  先计算二项式分布的PMF \[
+  P(X=k)=\left(\begin{array}{c}n\\k\end{array}\right)p^k\left(1-p\right)^{n-k}=\left(\begin{array}{c}12\\k\end{array}\right)\left(\frac{1}{3}\right)^k\left(1-\frac{1}{3}\right)
+  \]
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{options}\NormalTok{(}\DataTypeTok{digits =} \DecValTok{8}\NormalTok{)}
+\NormalTok{n =}\StringTok{ }\DecValTok{12}
+\NormalTok{p =}\StringTok{ }\DecValTok{1}\OperatorTok{/}\DecValTok{3}
+\NormalTok{k =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{0}\OperatorTok{:}\NormalTok{n)}
+\NormalTok{P =}\StringTok{ }\KeywordTok{choose}\NormalTok{(n,k) }\OperatorTok{*}\StringTok{ }\NormalTok{p}\OperatorTok{^}\NormalTok{k }\OperatorTok{*}\StringTok{ }\NormalTok{(}\DecValTok{1} \OperatorTok{-}\StringTok{ }\NormalTok{p)}\OperatorTok{^}\NormalTok{(n }\OperatorTok{-}\StringTok{ }\NormalTok{k)}
+\NormalTok{P}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 7.7073466e-03 4.6244080e-02 1.2717122e-01 2.1195203e-01 2.3844604e-01
+##  [6] 1.9075683e-01 1.1127482e-01 4.7689207e-02 1.4902877e-02 3.3117505e-03
+## [11] 4.9676258e-04 4.5160234e-05 1.8816764e-06
+\end{verbatim}
+
+然后利用函数\textbf{cumsum}计算其CDF
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{F =}\StringTok{ }\KeywordTok{cumsum}\NormalTok{(P)}
+\NormalTok{F_k =}\StringTok{ }\KeywordTok{cbind}\NormalTok{(k,F)}
+\KeywordTok{colnames}\NormalTok{(F_k) =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{'k'}\NormalTok{,}\StringTok{'F(X=k)'}\NormalTok{)}
+\NormalTok{F_k}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        k       F(X=k)
+##  [1,]  0 0.0077073466
+##  [2,]  1 0.0539514264
+##  [3,]  2 0.1811226458
+##  [4,]  3 0.3930746781
+##  [5,]  4 0.6315207144
+##  [6,]  5 0.8222775435
+##  [7,]  6 0.9335523605
+##  [8,]  7 0.9812415677
+##  [9,]  8 0.9961444450
+## [10,]  9 0.9994561955
+## [11,] 10 0.9999529581
+## [12,] 11 0.9999981183
+## [13,] 12 1.0000000000
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{(\arabic{enumi})}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  直接用函数\textbf{pbinom}函数计算二项式分布的CDF
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{F =}\StringTok{ }\KeywordTok{pbinom}\NormalTok{(k,n,p)}
+\NormalTok{F_k =}\StringTok{ }\KeywordTok{cbind}\NormalTok{(k,F)}
+\KeywordTok{colnames}\NormalTok{(F_k) =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{'k'}\NormalTok{,}\StringTok{'F(X=k)'}\NormalTok{)}
+\NormalTok{F_k}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        k       F(X=k)
+##  [1,]  0 0.0077073466
+##  [2,]  1 0.0539514264
+##  [3,]  2 0.1811226458
+##  [4,]  3 0.3930746781
+##  [5,]  4 0.6315207144
+##  [6,]  5 0.8222775435
+##  [7,]  6 0.9335523605
+##  [8,]  7 0.9812415677
+##  [9,]  8 0.9961444450
+## [10,]  9 0.9994561955
+## [11,] 10 0.9999529581
+## [12,] 11 0.9999981183
+## [13,] 12 1.0000000000
+\end{verbatim}
+
+计算\(P(x>7)\)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{F =}\StringTok{ }\DecValTok{1}\OperatorTok{-}\KeywordTok{pbinom}\NormalTok{(}\DecValTok{7}\NormalTok{,n,p)}
+\DecValTok{1}\OperatorTok{-}\KeywordTok{pbinom}\NormalTok{(}\DecValTok{7}\NormalTok{,n,p)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.018758432
+\end{verbatim}
+
+\hypertarget{lunatics-data}{%
+\section{1.13 (lunatics data)}\label{lunatics-data}}
+
+Obtain a five-number summary for the numeric variables in the lunatics
+data set (see Example 1.12). From the summary we can get an idea about
+the skewness of variables by comparing the median and the mean
+population. Which of the distributions are skewed, and in which
+direction?
+
+先生成所需数据集
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x =}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{rnorm}\NormalTok{(}\DecValTok{20}\NormalTok{),}\DecValTok{10}\NormalTok{,}\DecValTok{2}\NormalTok{)}
+\NormalTok{x}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              [,1]         [,2]
+##  [1,] -0.65822854 -2.272548683
+##  [2,]  0.83044396 -0.549542906
+##  [3,] -1.16299565  1.535298576
+##  [4,] -0.37376462 -1.203134547
+##  [5,] -1.24063003  0.056282405
+##  [6,] -0.18121616 -0.860101256
+##  [7,]  2.76138371  0.417178376
+##  [8,]  2.01819901 -0.092126212
+##  [9,] -0.73820170 -0.606404806
+## [10,] -0.91010968 -1.574098261
+\end{verbatim}
+
+生成数据集的summary
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        V1                  V2          
+##  Min.   :-1.240630   Min.   :-2.27255  
+##  1st Qu.:-0.867133   1st Qu.:-1.11738  
+##  Median :-0.515997   Median :-0.57797  
+##  Mean   : 0.034488   Mean   :-0.51492  
+##  3rd Qu.: 0.577529   3rd Qu.: 0.01918  
+##  Max.   : 2.761384   Max.   : 1.53530
+\end{verbatim}
+
+从中可见，V1的平均值大于其中位值，因此V1正偏(positive
+skewed)，V2的平均值大于其中位值，因此V2也正偏。
+
+
+\end{document}

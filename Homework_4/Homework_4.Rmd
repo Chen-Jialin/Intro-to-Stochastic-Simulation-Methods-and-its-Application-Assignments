@@ -1,0 +1,94 @@
+---
+title: "随机模拟方法与应用导论 作业四"
+author: "陈稼霖 45875852"
+date: "2019-10-02"
+output:
+  pdf_document:
+    includes:
+      in_header: header.tex
+    keep_tex: yes
+    latex_engine: pdflatex
+  html_document: default
+  word_document: default
+---
+
+# 4.5 (Drawing houses)
+The following function house plots an outline of a house centered about the point `(x, y)`:
+```
+house=function(x, y, ...){
+lines(c(x - 1, x + 1, x + 1, x - 1, x - 1),
+c(y - 1, y - 1, y + 1, y + 1, y - 1), ...)
+lines(c(x - 1, x, x + 1), c(y + 1, y + 2, y + 1), ...)
+lines(c(x - 0.3, x + 0.3, x + 0.3, x - 0.3, x - 0.3),
+c(y - 1, y - 1, y + 0.4, y + 0.4, y - 1), ...)
+}
+```
+
+a. Read the function house into R.
+
+b.  Use the `plot.new` function to open a new plot window. Using the `plot.window` function, set up a coordinate system where the horizontal and vertical scales both range from $0$ to $10$.
+
+c. Using three applications of the function house, draw three houses on the current plot window centered at the locations $(1, 1)$, $(4, 2)$, and $(7, 6)$.
+
+d. Using the `...` argument, one is able to pass along parameters that modify attributes of the `line` function. For example, if one was interested in drawing a red house using thick lines at the location $(2, 7)$, one can type
+```
+house(2, 7, col="red", lwd=3)
+```
+
+  Using the `col` and `lty` arguments, draw three additional houses on the current plot window at different locations, colors, and line types.
+
+e. Draw a boundary `box` about the current plot window using the box function.
+
+<br/>
+
+a. 将上述方程读入R
+```{r}
+house=function(x, y, ...){
+lines(c(x - 1, x + 1, x + 1, x - 1, x - 1),
+c(y - 1, y - 1, y + 1, y + 1, y - 1), ...)
+lines(c(x - 1, x, x + 1), c(y + 1, y + 2, y + 1), ...)
+lines(c(x - 0.3, x + 0.3, x + 0.3, x - 0.3, x - 0.3),
+c(y - 1, y - 1, y + 0.4, y + 0.4, y - 1), ...)
+}
+```
+
+b. 用`plot.new`函数新建一个绘图窗口，然后用`plot.window`函数设定横纵范围均为$0$到$10$的坐标系
+```{r}
+plot.new()
+plot.window(xlim = c(0,10),ylim = c(0,10))
+```
+
+c. 用上面定义的`house`函数绘制三个中心分别在$(1,1)$，$(4,2)$和$(7, 6)$的房子
+```{r}
+plot.new()
+plot.window(xlim = c(0,10),ylim = c(0,10))
+house(1,1)
+house(4,2)
+house(7,6)
+```
+
+d. 通过向`...`中输入参数，额外绘制三个具有不同位置、颜色和线条类型的房子
+```{r}
+plot.new()
+plot.window(xlim = c(0,10),ylim = c(0,10))
+house(1,1)
+house(4,2)
+house(7,6)
+house(1,5,col = 'red',lty = 'dashed')
+house(4,6,col = 'green',lty = 'dotted')
+house(7,2,col = 'blue',lty = 'dotdash')
+```
+
+e. 用`box`函数绘制当前绘图窗口的边界
+```{r}
+plot.new()
+plot.window(xlim = c(0,10),ylim = c(0,10))
+house(1,1)
+house(4,2)
+house(7,6)
+house(1,5,col = 'red',lty = 'dashed')
+house(4,6,col = 'green',lty = 'dotted')
+house(7,2,col = 'blue',lty = 'dotdash')
+box()
+```
+

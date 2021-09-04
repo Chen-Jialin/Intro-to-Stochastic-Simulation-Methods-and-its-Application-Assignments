@@ -1,0 +1,13 @@
+---
+title: "随机模拟方法与应用导论 作业"
+author: "陈稼霖 45875852"
+date: "2019-0-"
+output:
+  pdf_document:
+    includes:
+      in_header: header.tex
+    keep_tex: yes
+    latex_engine: pdflatex
+  html_document: default
+  word_document: default
+---

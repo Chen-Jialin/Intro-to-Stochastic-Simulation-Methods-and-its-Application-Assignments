@@ -1,0 +1,42 @@
+---
+title: "随机模拟方法与应用导论 作业六"
+author: "陈稼霖 45875852"
+date: "2019-10-04"
+output:
+  pdf_document:
+    includes:
+      in_header: header.tex
+    keep_tex: yes
+    latex_engine: pdflatex
+  html_document: default
+  word_document: default
+---
+
+# 6.5 (Comparing snowfall of Buffalo and Cleveland)
+The datafile `“buffalo.cleveland.snowfall.txt”` contains the total snowfall in inches for the cities Buffalo and Cleveland for the seasons $1968-69$ through $2008-09$.
+
+a. Compute the differences between the Buffalo snowfall and the Cleveland snowfall for all seasons.
+
+b. Using the `t.test` function with the difference data, test the hypothesis that Buffalo and Cleveland get, on average, the same total snowfall in a season.
+
+c. Use the `t.test` function to construct a $95\%$ confidence interval of the mean difference in seasonal snowfall.
+
+<br/>
+
+a. 首先读取文件`buffalo.cleveland.snowfall.txt`
+```{r}
+snowfall = read.table('buffalo.cleveland.snowfall.txt',head = TRUE)
+```
+
+然后计算各个季度Buffalo和Cleveland的降雪量差值并展示
+```{r}
+snowfall$diff = snowfall$Buffalo - snowfall$Cleveland
+snowfall[,c(1,4)]
+```
+
+bc. 检验假设---Buffalo和Cleveland季度平均降雪量相等，也就是检验两地的季度降雪量差值的均值为$0$。用函数`t.test`和上面计算得到的差值数据检验该假设，代码和结果如下
+```{r}
+t.test(snowfall$diff,mu = 0,conf.level=0.95)
+```
+
+由结果可知，t检验统计量(t-test statistic)为$7.5692$，p值为$3.061\times10^{-9}$，由于p值很小($p\ll0.05$)，故拒绝假设；两地季度降雪量平均差值的$95\%$置信区间应为$(24.56221,42.45731)$。

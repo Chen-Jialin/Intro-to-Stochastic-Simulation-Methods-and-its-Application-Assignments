@@ -1,0 +1,43 @@
+---
+title: "随机模拟方法与应用导论 作业二"
+author: "陈稼霖 45875852"
+date: "2019-09-30"
+output:
+  pdf_document:
+    includes:
+      in_header: header.tex
+    keep_tex: yes
+    latex_engine: pdflatex
+  html_document: default
+  word_document: default
+---
+
+# 2.5 (mammals data, continued)
+Refer to Exercise 2.4. Construct a scatterplot of the ratio $r = brain/body$ vs body size for the full mammals data set.
+
+首先计算题目要求的脑体重量比$r=brain/body$
+```{r}
+library(MASS)
+r = mammals$brain / mammals$body
+```
+然后以体重$body$为横坐标，以$r$为纵坐标，绘制散点图
+```{r}
+plot(mammals$body,r,xlab = 'body',ylab = 'r')
+```
+
+# 2.13 (mammals data on original scale)
+Refer to the mammals data in Example 2.7. Construct a scatterplot like Figure 2.19 on the original scale (Figure 2.19 is on the log-log scale.) Label the points and distances for cat, cow, and human. In this example, which plot is easier to interpret?
+
+首先以各哺乳动物的体重$body$为横坐标，以各哺乳动物的脑重$brain$为纵坐标，绘制散点图；然后计算猫、牛和人之间的“距离”并在图中标出
+```{r}
+plot(mammals$body,mammals$brain,xlab = 'body',ylab = 'brain')
+y = mammals[c('Cat','Cow','Human'),]
+polygon(y)
+text(y,rownames(y))
+pairs = combn(rownames(y),2)
+x = (y[c(pairs[1,]),] + y[c(pairs[2,]),]) / 2
+d = as.character(dist(y))
+text(x,d)
+```
+
+由于数据的数量级差异较大，本题图中散点和标注聚集在左下方，难以分辨，还是例2.7中的对数图（图2.19）更为直观。

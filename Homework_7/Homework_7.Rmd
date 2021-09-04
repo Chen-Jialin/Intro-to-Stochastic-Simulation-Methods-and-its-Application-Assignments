@@ -1,0 +1,94 @@
+---
+title: "随机模拟方法与应用导论 作业七"
+author: "陈稼霖 45875852"
+date: "2019-10-05"
+output:
+  pdf_document:
+    includes:
+      in_header: header.tex
+    keep_tex: yes
+    latex_engine: pdflatex
+  html_document: default
+  word_document: default
+---
+
+# 7.5 (Hubble’s Law)
+In 1929 Edwin Hubble investigated the relationship between distance and velocity of celestial objects. Knowledge of this relationship might give clues as to how the universe was formed and what may happen in the future. Hubble’s Law is
+$$
+\text{Recession Velocity}=H_0\times\text{Distance}
+$$
+where $H_0$ is Hubble’s constant. This model is a straight line through the origin with slope $H_0$. Data that Hubble used to estimate the constant $H_0$ are given on the DASL web at http://lib.stat.cmu.edu/DASL/Datafiles/Hubble.html. Use the data to estimate Hubble's constant by simple linear regression.
+
+首先读取储存有数据的文件`hubble.xls`，数据如下
+```{r}
+hubble = read.table('hubble.txt',header = TRUE)
+hubble
+```
+
+然后调用函数`lm`，用过原点的一条直线拟合上面的数据，展示拟合直线的斜率和图像
+```{r}
+M1 = lm(hubble$recession_velocity ~ 0 + hubble$distance)
+M1
+plot(hubble,main = 'The Relationship Between Distance and Velocity of Celestial Objects')
+abline(M1)
+```
+
+由此可见，哈勃常数（拟合直线的斜率）$H_0=432.9$
+$$
+\text{Recession Velocity}=432.9\times\text{Distance}
+$$
+这意味着天体距离每增加$1$Mpc，其推行速度增加$432.9$km/s。
+
+# 7.10 (lunatics data)
+Refer to the “lunatics” data in Example 7.8. Repeat
+the analysis, after deleting the two counties that are offshore islands, `NANTUCKET` and `DUCKS` counties. Compare the estimates of slope and intercept with those obtained in Example 7.8. Construct the plots and analyze the residuals as in Example 7.8.
+
+首选读取储存有数据的文件`lunatics.txt`，数据如下
+```{r}
+lunatics = read.table('lunatics.txt',header = TRUE)
+lunatics
+```
+
+去除`COUNTY`为`NANTUCKET`和`DUKES`的行
+```{r}
+lunatics = lunatics[which(lunatics$COUNTY != 'NANTUCKET' & lunatics$COUNTY != 'DUKES'),]
+lunatics
+```
+
+重复例7.8的分析过程，首先绘制在家照料的疯人百分比`PHOME`到最近的精神卫生中心的距离`DIST`的散点图并计算两者的相关系数
+```{r}
+attach(lunatics)
+plot(DIST,PHOME)
+cor(DIST,PHOME)
+```
+
+由此可见，`PHOME`和`DIST`之间的关系似乎并非线性，而更可能是双曲线。因此，取`DIST`的倒数`RDIST`，绘制`PHOME`关于`RDIST`的散点图，并计算两者之间的相关系数。
+```{r}
+RDIST = 1 / DIST
+plot(RDIST,PHOME)
+cor(RDIST,PHOME)
+```
+
+在这里$|\text{cor(RDIST,PHOME)}|>|\text{cor(DIST,PHOME)}|$，说明`PHOME`和`RDIST`之间相对于`PHOME`和`RDIST`之间具有更强的线性相关性。因此，我们用简单的线性回归模型
+$$
+\text{PHOME}_i=\beta_0+\beta_1\text{RDIST}_i+\varepsilon_i
+$$
+来拟合两者之间的关系，调用函数`lm`计算相关的参数并绘制相应的拟合线
+```{r}
+M2 = lm(PHOME ~ RDIST)
+M2
+plot(RDIST,PHOME)
+abline(M2)
+plot(DIST,PHOME)
+curve(M2$coef[1] + M2$coef[2] / x,add = TRUE)
+```
+
+与例7.8中斜率$73.93$，截距$-266.32$相比，当去除`NANTUCKET`和`DUCKS`两个点后，获得的截距$79$更大，截距$-305.52$更小，由图可见，拟合得到的曲线更加贴合数据的走势。
+
+仿照例7.8，绘制残差图
+```{r}
+plot(M2$fitted.values,M2$residuals,xlab = 'fitted',ylab = 'residuals')
+abline(h = 0,lty = 2)
+```
+
+相比例7.8，当去除`NANTUCKET`和`DUCKS`两个点后，残差范围更小，说明拟合效果更优。
